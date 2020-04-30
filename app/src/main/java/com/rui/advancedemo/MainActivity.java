@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.rui.advancedemo.ioc.CheckNet;
 import com.rui.advancedemo.ioc.OnClick;
 import com.rui.advancedemo.ioc.ViewById;
 import com.rui.advancedemo.ioc.ViewUtils;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(values = {R.id.ioc_test})
+    @CheckNet
     public void click(){
         mIocTest.setText("click");
     }

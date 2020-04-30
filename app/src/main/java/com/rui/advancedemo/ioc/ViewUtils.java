@@ -2,6 +2,9 @@ package com.rui.advancedemo.ioc;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Toast;
+
+import com.rui.advancedemo.utils.NetUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -69,8 +72,10 @@ public class ViewUtils {
             if(annotation!=null){
                 for (int value : annotation.values()) {
                     View view=viewFinder.findViewById(value);
+                    //拓展，监测网络
+                    boolean isCheckNet=method.getAnnotation(CheckNet.class)!=null;
                     if(view!=null){
-                        view.setOnClickListener(new DeclaredOnClickListener(method,object));
+                        view.setOnClickListener(new DeclaredOnClickListener(method,object,isCheckNet));
                     }
                 }
             }
@@ -84,14 +89,22 @@ public class ViewUtils {
 
         private Method mMethod;
         private Object mObject;
+        private boolean mNeedCheckNet;
 
-        public DeclaredOnClickListener(Method method,Object object) {
+        public DeclaredOnClickListener(Method method,Object object,boolean needCheckNet) {
             this.mMethod=method;
             this.mObject=object;
+            this.mNeedCheckNet=needCheckNet;
         }
 
         @Override
         public void onClick(View v) {
+            if(mNeedCheckNet){
+                if(!NetUtils.networkAvailable(v.getContext())){
+                    Toast.makeText(v.getContext(),"当前网络不可用,请重试",Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
             if(mMethod!=null){
                 try {
                     mMethod.invoke(mObject);
