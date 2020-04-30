@@ -1,0 +1,21 @@
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:+'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+}
+
+/*// 强制统一所有support包的版本，防止版本不一致导致编译问题
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion rootProject.ext.androidSupportVersion
+            }
+        }
+    }
+}*/
+
+//configurations {
+//    all*.exclude group: 'com.android.support', module: 'support-v4'
+//}
