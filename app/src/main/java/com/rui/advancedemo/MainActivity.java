@@ -1,31 +1,38 @@
 package com.rui.advancedemo;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Button;
+import android.os.Environment;
 
-import com.rui.advancedemo.ioc.CheckNet;
-import com.rui.advancedemo.ioc.OnClick;
-import com.rui.advancedemo.ioc.ViewById;
 import com.rui.advancedemo.ioc.ViewUtils;
+import com.rui.baselibrary.base.BaseSkinActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
 
-    @ViewById(R.id.ioc_test)
-    private Button mIocTest;
+public class MainActivity extends BaseSkinActivity {
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setLayout() {
         setContentView(R.layout.activity_main);
         ViewUtils.inject(this);
 
-        mIocTest.setText("demo");
     }
 
-    @OnClick(values = {R.id.ioc_test})
-    @CheckNet
-    public void click(){
-        mIocTest.setText("click");
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void fixDexBug(){
+        File dexFile= new File(Environment.getExternalStorageDirectory(),"fix.dex");
+        if(dexFile.exists()){
+
+        }
     }
 }

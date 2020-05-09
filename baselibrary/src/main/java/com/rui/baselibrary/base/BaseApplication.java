@@ -15,6 +15,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //初始化全局异常
         ExceptionCrashHandler.getInstance().init(this);
 
     }
