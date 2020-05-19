@@ -10,10 +10,15 @@ import android.view.ViewGroup;
  */
 public class AbsNavigationBar implements INavigationBar{
 
-    private Builder.AbsNavigationParams absNavigationParams;
+    private Builder.AbsNavigationParams mAbsNavigationParams;
 
-    public AbsNavigationBar() {
-            
+    public AbsNavigationBar(Builder.AbsNavigationParams absNavigationParams) {
+        this.mAbsNavigationParams=absNavigationParams;
+        createAndBindView();
+    }
+
+    public void createAndBindView(){
+
     }
 
     @Override
