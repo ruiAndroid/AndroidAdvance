@@ -1,8 +1,10 @@
-package com.rui.baselibrary.utils;
+package com.rui.baselibrary.hotfix;
 
 import android.content.Context;
 import android.os.FileUriExposedException;
 import android.util.Log;
+
+import com.rui.baselibrary.utils.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

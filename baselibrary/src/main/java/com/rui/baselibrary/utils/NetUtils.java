@@ -1,4 +1,4 @@
-package com.rui.advancedemo.utils;
+package com.rui.baselibrary.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

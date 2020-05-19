@@ -4,8 +4,9 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rui.advancedemo.ioc.OnClick;
-import com.rui.advancedemo.ioc.ViewUtils;
+import com.rui.baselibrary.ioc.CheckNet;
+import com.rui.baselibrary.ioc.OnClick;
+import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.baselibrary.base.BaseSkinActivity;
 import com.rui.baselibrary.dialog.AlertDialog;
 
@@ -22,6 +23,12 @@ public class MainActivity extends BaseSkinActivity {
 
     }
 
+    @CheckNet
+    @OnClick(values = R.id.ioc_test)
+    public void test(View view){
+
+    }
+
     @Override
     public void initUI() {
 
@@ -35,7 +42,7 @@ public class MainActivity extends BaseSkinActivity {
                     }
                 })
                 .fullWidth()
-                .create().show();
+                .show();
     }
 
     @Override

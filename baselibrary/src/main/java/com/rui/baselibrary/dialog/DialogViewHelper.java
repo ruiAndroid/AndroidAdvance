@@ -38,7 +38,11 @@ class DialogViewHelper {
     }
 
 
-
+    /**
+     * 设置点击监听
+     * @param viewId
+     * @param listener
+     */
     public void setOnClickListener(int viewId, View.OnClickListener listener) {
         View tv=findView(viewId);
         tv.setOnClickListener(listener);

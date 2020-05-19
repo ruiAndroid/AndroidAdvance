@@ -35,8 +35,10 @@ class AlertController {
         public int mWidth= ViewGroup.LayoutParams.WRAP_CONTENT;
         public int mHeight= ViewGroup.LayoutParams.WRAP_CONTENT;
 
+        //存放Text文本的map
         public SparseArray<CharSequence> mTextSparseArray=new SparseArray<>();
 
+        //存放点击监听的map
         public SparseArray<View.OnClickListener> mOnClickListenerSparseArray=new SparseArray<>();
 
         public DialogInterface.OnCancelListener mOnCancelListener;

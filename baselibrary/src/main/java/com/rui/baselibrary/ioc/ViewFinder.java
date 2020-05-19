@@ -1,4 +1,4 @@
-package com.rui.advancedemo.ioc;
+package com.rui.baselibrary.ioc;
 
 import android.app.Activity;
 import android.view.View;

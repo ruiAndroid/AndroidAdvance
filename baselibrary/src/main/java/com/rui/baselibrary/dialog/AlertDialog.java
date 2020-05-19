@@ -16,11 +16,12 @@ public class AlertDialog extends Dialog {
         mController=new AlertController(this,getWindow());
     }
 
+    /**
+     * 建造者设计模式
+     */
     public static class Builder{
 
         private final AlertController.AlertParam P;
-
-
 
         public Builder(Context context) {
             this(context, R.style.dialog);
@@ -50,6 +51,7 @@ public class AlertDialog extends Dialog {
             P.mViewLayoutResId = 0;
             return this;
         }
+
         public Builder fullWidth() {
             P.mWidth= ViewGroup.LayoutParams.MATCH_PARENT;
             return this;
@@ -77,9 +79,6 @@ public class AlertDialog extends Dialog {
             return dialog;
         }
 
-
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-package com.rui.advancedemo.ioc;
+package com.rui.baselibrary.ioc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
