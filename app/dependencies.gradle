@@ -9,7 +9,7 @@ dependencies {
 
 }
 
-/*// 强制统一所有support包的版本，防止版本不一致导致编译问题
+// 强制统一所有support包的版本，防止版本不一致导致编译问题
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         def requested = details.requested
@@ -19,7 +19,7 @@ configurations.all {
             }
         }
     }
-}*/
+}
 
 //configurations {
 //    all*.exclude group: 'com.android.support', module: 'support-v4'

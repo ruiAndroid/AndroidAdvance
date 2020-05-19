@@ -27,3 +27,19 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    // 最小兼容版本
+    minSdkVersion = 18
+    // 本地编译sdk版本
+    compileSdkVersion = 28
+    // 运行目标系统sdk版本
+    targetSdkVersion = 28
+    // 编译工具版本
+    buildToolsVersion = '28.0.3'
+    // android支持库统一版本
+    androidSupportVersion = '25.2.0'
+
+    versionCode = 1
+    versionName = "1.0"
+}
