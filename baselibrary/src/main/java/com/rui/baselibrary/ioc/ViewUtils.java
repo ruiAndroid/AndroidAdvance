@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rui.advancedemo.utils.NetUtils;
+
+import com.rui.baselibrary.utils.NetUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -55,8 +56,6 @@ public class ViewUtils {
                 }
             }
         }
-
-
     }
 
     /**

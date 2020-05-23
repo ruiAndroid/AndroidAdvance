@@ -1,54 +1,81 @@
 package com.rui.baselibrary.navigationbar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Time: 2020/5/19
  * Author: jianrui
  * Description: 导航栏 build设计模式
  */
-public class AbsNavigationBar implements INavigationBar{
+public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNavigationParams> implements INavigationBar{
 
-    private Builder.AbsNavigationParams mAbsNavigationParams;
+    private P params;
 
-    public AbsNavigationBar(Builder.AbsNavigationParams absNavigationParams) {
-        this.mAbsNavigationParams=absNavigationParams;
+    private View view;
+    public AbsNavigationBar(P params) {
+        this.params=params;
         createAndBindView();
     }
 
-    public void createAndBindView(){
+    /**
+     * 创建和绑定布局
+     */
+    private void createAndBindView(){
+        if(params.mViewGroup==null){
+            //获取到decorView
+            ViewGroup decorView = (ViewGroup) ((Activity) params.mContext).getWindow().getDecorView();
 
+            View childAt = decorView.getChildAt(0);
+
+            params.mViewGroup= (ViewGroup) childAt;
+        }
+        view =LayoutInflater.from(params.mContext)
+                .inflate(bindLayoutId(),params.mViewGroup,false);
+        //添加到头部
+
+        params.mViewGroup.addView(view,0);
+
+        applyView();
     }
 
-    @Override
-    public int bindLayoutId() {
-        return 0;
+    /**
+     * 设置text
+     * @param id
+     * @param title
+     */
+    protected void setText(int id,String title){
+        TextView textView= (TextView) findViewById(id);
+        textView.setText(title);
     }
 
-    @Override
-    public void applyView() {
 
+    public <T extends View>View findViewById(int id){
+        return view.findViewById(id);
+    }
+
+    public P getParams() {
+        return params;
     }
 
     public abstract static class Builder{
 
-        AbsNavigationParams P;
-
-        public Builder(Context context, ViewGroup viewGroup) {
-            P=new AbsNavigationParams(context,viewGroup);
-        }
-
-        public abstract AbsNavigationBar builder();
-
+        //构建导航条方法
+        public abstract AbsNavigationBar build();
+        //默认配置参数
         public static class AbsNavigationParams {
-            private Context mContext;
-            private ViewGroup mViewGroup;
+            Context mContext;
+            ViewGroup mViewGroup;
 
             public AbsNavigationParams(Context context, ViewGroup viewGroup) {
                 this.mContext=context;
                 this.mViewGroup=viewGroup;
             }
+
         }
 
     }

@@ -2,10 +2,13 @@ package com.rui.advancedemo;
 
 import android.os.Environment;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.rui.advancedemo.navigation.DefaultNavigationBar;
 import com.rui.baselibrary.ioc.CheckNet;
 import com.rui.baselibrary.ioc.OnClick;
+import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.baselibrary.base.BaseSkinActivity;
 import com.rui.baselibrary.dialog.AlertDialog;
@@ -13,6 +16,9 @@ import com.rui.baselibrary.dialog.AlertDialog;
 import java.io.File;
 
 public class MainActivity extends BaseSkinActivity {
+
+    @ViewById(R.id.content)
+    private RelativeLayout mContent;
 
     @Override
     public void setLayout() {
@@ -39,6 +45,15 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     public void initUI() {
+        DefaultNavigationBar defaultNavigationBar= new DefaultNavigationBar.Builder(this,null)
+                .setTitle("wokk")
+                .setLeftClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .build();
 
 
     }
