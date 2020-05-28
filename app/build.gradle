@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply from: 'dependencies.gradle'
+
+dependencies {
+    compile project(path: ':framelibrary')
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion

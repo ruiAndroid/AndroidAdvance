@@ -1,17 +1,20 @@
 package com.rui.advancedemo;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rui.advancedemo.navigation.DefaultNavigationBar;
+import com.rui.baselibrary.base.BaseSkinActivity;
+import com.rui.baselibrary.dialog.AlertDialog;
+import com.rui.baselibrary.http.HttpUtils;
 import com.rui.baselibrary.ioc.CheckNet;
 import com.rui.baselibrary.ioc.OnClick;
 import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
-import com.rui.baselibrary.base.BaseSkinActivity;
-import com.rui.baselibrary.dialog.AlertDialog;
+import com.rui.framelibrary.http.HttpCallback;
 
 import java.io.File;
 
@@ -24,12 +27,26 @@ public class MainActivity extends BaseSkinActivity {
     public void setLayout() {
         setContentView(R.layout.activity_main);
         ViewUtils.inject(this);
+        HttpUtils.with(this)
+                .url("http://www.baidu.com?")
+                .get()
+                .execute(new HttpCallback() {
+                    @Override
+                    public void onError(Exception e) {
 
+                    }
+
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.i("test","jianrui:"+result);
+                    }
+                });
     }
 
     @CheckNet
     @OnClick(values = R.id.dialog_test)
     public void test(View view){
+        //dialog
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setView(R.layout.layout_dialog)
                 .setText(R.id.dialog_ok,"好的")
@@ -41,10 +58,15 @@ public class MainActivity extends BaseSkinActivity {
                 })
                 .fullWidth()
                 .show();
+
+
+
     }
 
     @Override
     public void initUI() {
+
+              //填充title
         DefaultNavigationBar defaultNavigationBar= new DefaultNavigationBar.Builder(this,null)
                 .setTitle("wokk")
                 .setLeftClickListener(new View.OnClickListener() {
@@ -54,6 +76,7 @@ public class MainActivity extends BaseSkinActivity {
                     }
                 })
                 .build();
+
 
 
     }
