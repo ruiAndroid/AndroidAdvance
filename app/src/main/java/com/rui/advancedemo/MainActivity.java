@@ -30,7 +30,7 @@ public class MainActivity extends BaseSkinActivity {
         HttpUtils.with(this)
                 .url("http://www.baidu.com?")
                 .get()
-                .execute(new HttpCallback() {
+                .execute(new HttpCallback<String>() {
                     @Override
                     public void onError(Exception e) {
 
@@ -38,7 +38,10 @@ public class MainActivity extends BaseSkinActivity {
 
                     @Override
                     public void onSuccess(String result) {
+                        //转换成可操作性的对象
+
                         Log.i("test","jianrui:"+result);
+
                     }
                 });
     }

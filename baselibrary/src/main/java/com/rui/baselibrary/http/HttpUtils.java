@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.ArrayMap;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
@@ -106,5 +108,16 @@ public class HttpUtils {
         }else if(mRequestMethod==GET_TYPE){
             mDefaultEngine.get(mUrl,mParams,engineCallback);
         }
+    }
+
+    /**
+     * 解析一个类的class信息
+     * @param obj
+     * @return
+     */
+    public static Class<?> getClazzInfo(Object obj){
+        Type genericSuperclass = obj.getClass().getGenericSuperclass();
+        Type[] actualTypeArguments = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
+        return (Class<?>) actualTypeArguments[0];
     }
 }

@@ -28,4 +28,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:+'
     implementation project(':baselibrary')
 
+    //json解析
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
