@@ -6,6 +6,12 @@ package com.rui.baselibrary.utils;
  * Description:
  */
 public class DaoUtils {
+
+    /**
+     * 获取column字段类型
+     * @param type
+     * @return
+     */
     public static String getColumnType(String type){
         String value=null;
         if(type.contains("String")){
@@ -25,5 +31,14 @@ public class DaoUtils {
         }
         return value;
     }
+
+    /**
+     * 根据对象获取到对应的table name
+     * @param obj
+     */
+    public static String getTableName(Object obj){
+        return obj.getClass().getSimpleName();
+    }
+
 
 }

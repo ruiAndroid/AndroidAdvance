@@ -12,4 +12,8 @@ public interface IDaoSupport<T> {
     //插入数据
     public void insert(T t);
 
+    //删除数据
+    public void delete(T t);
+
+
 }

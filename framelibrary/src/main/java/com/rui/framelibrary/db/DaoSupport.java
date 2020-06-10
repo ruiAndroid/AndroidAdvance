@@ -1,5 +1,6 @@
 package com.rui.framelibrary.db;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.Field;
  * Author: jianrui
  * Description: Dao上层接口实现类
  */
-public class DaoSupport<T> implements IDaoSupport{
+public class DaoSupport<T> implements IDaoSupport<T>{
 
     private SQLiteDatabase mSqLiteDatabase;
     private Class<T> mClazz;
@@ -41,13 +42,46 @@ public class DaoSupport<T> implements IDaoSupport{
         mSqLiteDatabase.execSQL(sb.toString());
     }
 
+
     /**
      * 插入数据库
      * @param o  任意对象
      */
     @Override
-    public void insert(Object o) {
+    public void insert(T t) {
+        ContentValues contentValues=contentValuesByObj(t);
+        mSqLiteDatabase.insert(DaoUtils.getTableName(t),null,contentValues);
+    }
 
+    @Override
+    public void delete(T t) {
 
     }
+
+
+    /**
+     * 将obj转为conentValues对象
+     * @param t
+     */
+    public ContentValues contentValuesByObj(T t){
+        //封装values
+        ContentValues contentValues=new ContentValues();
+        Field[] declaredFields = t.getClass().getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            String key=declaredField.getName();
+            try {
+                Object value=declaredField.get(t);
+                //put value时必须指定类型
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return null;
+    }
+
+
+
 }
