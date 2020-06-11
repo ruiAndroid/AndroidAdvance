@@ -20,6 +20,8 @@ import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.http.HttpCallback;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
 
@@ -50,7 +52,14 @@ public class MainActivity extends BaseSkinActivity {
 
 
         IDaoSupport<DBTestBean> daoSupport = DaoSupprotFactory.getDaoFactoryInstance().getDaoSupport(DBTestBean.class);
-        daoSupport.insert(new DBTestBean(1,"haha"));
+//        daoSupport.insert(new DBTestBean(1,"haha"));
+        List<DBTestBean> dbTestBeans=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            DBTestBean dbTestBean=new DBTestBean();
+            dbTestBean.setAge(i);
+            dbTestBean.setName("a:"+i);
+        }
+        daoSupport.insert(dbTestBeans);
     }
 
     @CheckNet
