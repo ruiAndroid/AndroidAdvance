@@ -19,5 +19,8 @@ public interface IDaoSupport<T> {
     //删除数据
     public void delete(T t);
 
+    //查询数据
+    public List<T> query();
+
 
 }

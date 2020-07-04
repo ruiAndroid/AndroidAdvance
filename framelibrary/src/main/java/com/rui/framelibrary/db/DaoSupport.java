@@ -3,6 +3,7 @@ package com.rui.framelibrary.db;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.util.ArrayMap;
@@ -17,6 +18,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +65,6 @@ public class DaoSupport<T> implements IDaoSupport<T>{
 
     /**
      * 插入数据库
-     * @param o  任意对象
      */
     @Override
     public void insert(T t) {
@@ -77,15 +79,115 @@ public class DaoSupport<T> implements IDaoSupport<T>{
     @Override
     public void insert(List<T> list) {
         //优化批量插入
-        //反射在一定程度上影响性能
-
-
+        //开启事务
+        for(int i=0;i<list.size();i++){
+            T t = list.get(i);
+            ContentValues contentValues=contentValuesByObj(t);
+            mSqLiteDatabase.insert(DaoUtils.getTableName(t),null,contentValues);
+        }
     }
 
 
     @Override
     public void delete(T t) {
 
+    }
+
+    @Override
+    public List<T> query() {
+        Log.i("test","tableName:"+mClazz.getSimpleName());
+        Cursor cursor = mSqLiteDatabase.query(mClazz.getSimpleName(), null, null, null, null, null, null);
+        return cursorToList(cursor);
+    }
+
+    /**
+     * 游标转为list
+     * @param cursor
+     * @return
+     */
+    private List<T> cursorToList(Cursor cursor) {
+        List<T> list=new ArrayList<>();
+        if(cursor!=null && cursor.moveToFirst()){
+            //不断从游标里面获取数据
+            do {
+                try {
+                    T t = mClazz.newInstance();
+                    Field[] declaredFields = mClazz.getDeclaredFields();
+                    for(Field field:declaredFields){
+                        //遍历属性
+                        field.setAccessible(true);
+                        String name = field.getName();
+                        //获取name在表中的index
+                        int columnIndex = cursor.getColumnIndex(name);
+                        if(columnIndex==-1){
+                            continue;
+                        }
+
+                        //通过反射获取游标方法
+                        Method cursorMethod=cursorMethod(field.getType());
+                        if(cursorMethod!=null){
+                            Object value = cursorMethod.invoke(cursor, columnIndex);
+                            if(value==null){
+                                continue;
+                            }
+                            //处理一些特殊的部分
+                            if(field.getType()==boolean.class || field.getType()==Boolean.class){
+                                if("0".equals(String.valueOf(value))){
+                                    value=false;
+                                }else if("1".equals(String.valueOf(value))){
+                                    value=true;
+                                }
+                            }else if(field.getType()==char.class || field.getType()==Character.class){
+                                value=((String)value).charAt(0);
+                            }else if(field.getType()== Date.class){
+                                long date= (long) value;
+                                if(date<0){
+                                    value=null;
+                                }else{
+                                    value=new Date(date);
+                                }
+                            }
+                            field.set(t,value);
+                            list.add(t);
+                        }
+
+                    }
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+
+    private Method cursorMethod(Class<?> type) throws NoSuchMethodException {
+        String methodName=getColumnMethodName(type);
+        Method method=Cursor.class.getMethod(methodName,int.class);
+        return method;
+    }
+
+    private String getColumnMethodName(Class<?> type) {
+        String typeName;
+        typeName=type.getSimpleName();
+        String methodName="get"+typeName;
+        if("getBoolean".equals(methodName) || "getInteger".equals(methodName)){
+            methodName="getInt";
+        }else if("getChar".equals(methodName) || "getCharacter".equals(methodName)){
+            methodName="getString";
+        }else if("getDate".equals(methodName)){
+            methodName="getLong";
+        }
+        return methodName;
     }
 
 
