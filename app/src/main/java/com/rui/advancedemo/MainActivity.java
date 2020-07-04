@@ -15,7 +15,7 @@ import com.rui.baselibrary.ioc.CheckNet;
 import com.rui.baselibrary.ioc.OnClick;
 import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
-import com.rui.framelibrary.db.DaoSupprotFactory;
+import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.http.HttpCallback;
 
@@ -51,7 +51,7 @@ public class MainActivity extends BaseSkinActivity {
                 });
 
 
-        IDaoSupport<DBTestBean> daoSupport = DaoSupprotFactory.getDaoFactoryInstance().getDaoSupport(DBTestBean.class);
+        IDaoSupport<DBTestBean> daoSupport = DaoSupportFactory.getDaoFactoryInstance().getDaoSupport(DBTestBean.class);
 //        daoSupport.insert(new DBTestBean(1,"haha"));
         List<DBTestBean> dbTestBeans=new ArrayList<>();
         for(int i=0;i<10;i++){

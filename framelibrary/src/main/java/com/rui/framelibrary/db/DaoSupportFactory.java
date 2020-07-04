@@ -10,14 +10,14 @@ import java.io.File;
  * Author: jianrui
  * Description: Dao工厂类
  */
-public class DaoSupprotFactory {
+public class DaoSupportFactory {
 
-    private volatile static DaoSupprotFactory mFactory;
+    private volatile static DaoSupportFactory mFactory;
 
     //持有外部数据库的引用
     private SQLiteDatabase mSqLiteDatabase;
 
-    private DaoSupprotFactory() {
+    private DaoSupportFactory() {
 
         //把数据库放在内存卡里面
         File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator +"rui"+File.separator+"database");
@@ -34,11 +34,11 @@ public class DaoSupprotFactory {
     /**
      * 单例实现
      */
-    public static DaoSupprotFactory getDaoFactoryInstance(){
+    public static DaoSupportFactory getDaoFactoryInstance(){
         if(mFactory==null){
-            synchronized (DaoSupprotFactory.class){
+            synchronized (DaoSupportFactory.class){
                 if(mFactory==null){
-                    mFactory=new DaoSupprotFactory();
+                    mFactory=new DaoSupportFactory();
                 }
             }
         }

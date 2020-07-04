@@ -1,14 +1,23 @@
 package com.rui.framelibrary.db;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.LayoutInflaterCompat;
+import android.util.ArrayMap;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.rui.baselibrary.utils.DaoUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,12 +25,17 @@ import java.util.List;
  * Author: jianrui
  * Description: Dao上层接口实现类
  */
+@SuppressLint("NewApi")
 public class DaoSupport<T> implements IDaoSupport<T>{
 
     private SQLiteDatabase mSqLiteDatabase;
     private Class<T> mClazz;
 
+    //反射拿到的Method存储在ArrayMap中
+    private static final ArrayMap<String,Method> sPutMethodMap =
+            new ArrayMap<String, Method>();
 
+    static final Object[] mPutMethodArgs = new Object[2];
 
     @Override
     public void init(SQLiteDatabase sqLiteDatabase, Class clazz) {
@@ -62,7 +76,9 @@ public class DaoSupport<T> implements IDaoSupport<T>{
      */
     @Override
     public void insert(List<T> list) {
-        
+        //优化批量插入
+        //反射在一定程度上影响性能
+
 
     }
 
@@ -86,16 +102,26 @@ public class DaoSupport<T> implements IDaoSupport<T>{
             String key=declaredField.getName();
             try {
                 Object value=declaredField.get(t);
+                mPutMethodArgs[0]=key;
+                mPutMethodArgs[1]=value;
+                Method putMethod=sPutMethodMap.get(value.getClass().getName());
+                if(putMethod==null){
+                    putMethod = ContentValues.class.getDeclaredMethod("put",String.class,value.getClass());
+                    sPutMethodMap.put(value.getClass().getName(),putMethod);
+                }
+
                 //put value时必须指定类型
-                Method putMethod = ContentValues.class.getDeclaredMethod("put",String.class,value.getClass());
                 putMethod.setAccessible(true);
-                putMethod.invoke(contentValues,key,value);
+                putMethod.invoke(contentValues,mPutMethodArgs);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+            }finally {
+                mPutMethodArgs[0]=null;
+                mPutMethodArgs[1]=null;
             }
         }
         return contentValues;
