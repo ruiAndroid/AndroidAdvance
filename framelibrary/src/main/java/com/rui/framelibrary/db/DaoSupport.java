@@ -2,25 +2,18 @@ package com.rui.framelibrary.db;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.util.ArrayMap;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import com.rui.baselibrary.utils.DaoUtils;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,8 +82,8 @@ public class DaoSupport<T> implements IDaoSupport<T>{
 
 
     @Override
-    public void delete(T t) {
-
+    public int delete(String whereClause, String... whereArgs) {
+        mSqLiteDatabase.delete(DaoUtils.getTableName(mClazz),whereClause,whereArgs);
     }
 
     @Override
@@ -98,6 +91,12 @@ public class DaoSupport<T> implements IDaoSupport<T>{
         Log.i("test","tableName:"+mClazz.getSimpleName());
         Cursor cursor = mSqLiteDatabase.query(mClazz.getSimpleName(), null, null, null, null, null, null);
         return cursorToList(cursor);
+    }
+
+    @Override
+    public int update(T t, String whereClause, String... whereArgs) {
+        ContentValues contentValues=contentValuesByObj(t);
+        return mSqLiteDatabase.update(DaoUtils.getTableName(mClazz),contentValues,whereClause,whereArgs);
     }
 
     /**

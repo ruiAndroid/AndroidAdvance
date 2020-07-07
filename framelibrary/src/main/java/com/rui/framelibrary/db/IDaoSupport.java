@@ -17,10 +17,14 @@ public interface IDaoSupport<T> {
     public void insert(List<T> list);
 
     //删除数据
-    public void delete(T t);
+    public int delete(String whereClause, String... whereArgs);
 
     //查询数据
     public List<T> query();
+
+    //更新数据
+    public int update(T t,String whereClause,String ...whereArgs);
+
 
 
 }
