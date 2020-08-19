@@ -34,6 +34,7 @@ public class MainActivity extends BaseSkinActivity {
         ViewUtils.inject(this);
         HttpUtils.with(this)
                 .url("http://www.baidu.com?")
+                .cache(true)    //读缓存
                 .get()
                 .execute(new HttpCallback<String>() {
                     @Override

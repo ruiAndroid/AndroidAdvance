@@ -69,6 +69,16 @@ public class HttpUtils {
     }
 
     /**
+     * 是否使用缓存
+     * @param params
+     * @return
+     */
+    public HttpUtils cache(boolean cache){
+        this.mCache=cache;
+        return this;
+    }
+
+    /**
      * post请求
      * @return
      */
