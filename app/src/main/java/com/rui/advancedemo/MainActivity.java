@@ -61,7 +61,8 @@ public class MainActivity extends BaseSkinActivity {
             dbTestBeans.add(dbTestBean);
         }
         daoSupport.insert(dbTestBeans);*/
-        List<DBTestBean> query = daoSupport.query();
+        List<DBTestBean> query = daoSupport.querySupport().selections("ages=?").selectionArgs("23").query();
+
         Log.i("test","query result:"+query.toString());
     }
 

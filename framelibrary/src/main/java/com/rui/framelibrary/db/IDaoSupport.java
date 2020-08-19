@@ -19,9 +19,8 @@ public interface IDaoSupport<T> {
     //删除数据
     public int delete(String whereClause, String... whereArgs);
 
-    //查询数据
-    public List<T> query();
-
+    //获取专门查询的支持类
+    QuerySupport<T> querySupport();
     //更新数据
     public int update(T t,String whereClause,String ...whereArgs);
 

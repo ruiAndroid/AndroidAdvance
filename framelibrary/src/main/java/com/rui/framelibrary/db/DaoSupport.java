@@ -2,7 +2,6 @@ package com.rui.framelibrary.db;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -12,8 +11,6 @@ import com.rui.baselibrary.utils.DaoUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +23,9 @@ public class DaoSupport<T> implements IDaoSupport<T>{
 
     private SQLiteDatabase mSqLiteDatabase;
     private Class<T> mClazz;
+
+    //查询支持类
+    private QuerySupport<T> mQuerySupport;
 
     //反射拿到的Method存储在ArrayMap中
     private static final ArrayMap<String,Method> sPutMethodMap =
@@ -83,14 +83,15 @@ public class DaoSupport<T> implements IDaoSupport<T>{
 
     @Override
     public int delete(String whereClause, String... whereArgs) {
-        mSqLiteDatabase.delete(DaoUtils.getTableName(mClazz),whereClause,whereArgs);
+        return mSqLiteDatabase.delete(DaoUtils.getTableName(mClazz),whereClause,whereArgs);
     }
 
     @Override
-    public List<T> query() {
-        Log.i("test","tableName:"+mClazz.getSimpleName());
-        Cursor cursor = mSqLiteDatabase.query(mClazz.getSimpleName(), null, null, null, null, null, null);
-        return cursorToList(cursor);
+    public QuerySupport<T> querySupport() {
+        if(mQuerySupport==null){
+            mQuerySupport=new QuerySupport<>(mClazz,mSqLiteDatabase);
+        }
+        return mQuerySupport;
     }
 
     @Override
@@ -100,98 +101,7 @@ public class DaoSupport<T> implements IDaoSupport<T>{
     }
 
     /**
-     * 游标转为list
-     * @param cursor
-     * @return
-     */
-    private List<T> cursorToList(Cursor cursor) {
-        List<T> list=new ArrayList<>();
-        if(cursor!=null && cursor.moveToFirst()){
-            //不断从游标里面获取数据
-            do {
-                try {
-                    T t = mClazz.newInstance();
-                    Field[] declaredFields = mClazz.getDeclaredFields();
-                    for(Field field:declaredFields){
-                        //遍历属性
-                        field.setAccessible(true);
-                        String name = field.getName();
-                        //获取name在表中的index
-                        int columnIndex = cursor.getColumnIndex(name);
-                        if(columnIndex==-1){
-                            continue;
-                        }
-
-                        //通过反射获取游标方法
-                        Method cursorMethod=cursorMethod(field.getType());
-                        if(cursorMethod!=null){
-                            Object value = cursorMethod.invoke(cursor, columnIndex);
-                            if(value==null){
-                                continue;
-                            }
-                            //处理一些特殊的部分
-                            if(field.getType()==boolean.class || field.getType()==Boolean.class){
-                                if("0".equals(String.valueOf(value))){
-                                    value=false;
-                                }else if("1".equals(String.valueOf(value))){
-                                    value=true;
-                                }
-                            }else if(field.getType()==char.class || field.getType()==Character.class){
-                                value=((String)value).charAt(0);
-                            }else if(field.getType()== Date.class){
-                                long date= (long) value;
-                                if(date<0){
-                                    value=null;
-                                }else{
-                                    value=new Date(date);
-                                }
-                            }
-                            field.set(t,value);
-                            list.add(t);
-                        }
-
-                    }
-
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-
-
-            }while (cursor.moveToNext());
-        }
-        return list;
-    }
-
-
-    private Method cursorMethod(Class<?> type) throws NoSuchMethodException {
-        String methodName=getColumnMethodName(type);
-        Method method=Cursor.class.getMethod(methodName,int.class);
-        return method;
-    }
-
-    private String getColumnMethodName(Class<?> type) {
-        String typeName;
-        typeName=type.getSimpleName();
-        String methodName="get"+typeName;
-        if("getBoolean".equals(methodName) || "getInteger".equals(methodName)){
-            methodName="getInt";
-        }else if("getChar".equals(methodName) || "getCharacter".equals(methodName)){
-            methodName="getString";
-        }else if("getDate".equals(methodName)){
-            methodName="getLong";
-        }
-        return methodName;
-    }
-
-
-    /**
-     * 将obj转为conentValues对象
+     * 将obj转为contentValues对象
      * @param t
      */
     public ContentValues contentValuesByObj(T t){
