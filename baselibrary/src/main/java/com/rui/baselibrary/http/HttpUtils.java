@@ -70,7 +70,6 @@ public class HttpUtils {
 
     /**
      * 是否使用缓存
-     * @param params
      * @return
      */
     public HttpUtils cache(boolean cache){
@@ -114,9 +113,9 @@ public class HttpUtils {
         engineCallback.onPreExecute(mContext,mParams);
         //判断执行方法
         if(mRequestMethod==POST_TYPE){
-            mDefaultEngine.post(mUrl,mParams,engineCallback);
+            mDefaultEngine.post(mUrl,mCache,mParams,engineCallback);
         }else if(mRequestMethod==GET_TYPE){
-            mDefaultEngine.get(mUrl,mParams,engineCallback);
+            mDefaultEngine.get(mUrl,mCache,mParams,engineCallback);
         }
     }
 

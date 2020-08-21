@@ -23,7 +23,7 @@ public class OkHttpEngine implements IHttpEngine{
 
 
     @Override
-    public void get(String url, Map<String, Object> params, final EngineCallback engineCallback) {
+    public void get(String url, boolean cache,Map<String, Object> params, final EngineCallback engineCallback) {
         OkHttpClient okHttpClient=new OkHttpClient();
         //添加公共参数
         for(Map.Entry<String, Object> entry:params.entrySet()){
@@ -34,6 +34,14 @@ public class OkHttpEngine implements IHttpEngine{
             }
         }
         Log.i("test","jianrui url:"+url);
+        //判断是否需要缓存
+        if(cache){
+            //看下是否有缓存，从数据库拿缓存,数据库缓存在frameLibrary
+
+        }else{
+
+
+        }
         Request.Builder requestBuilder = new Request.Builder().url(url);
         Request request = requestBuilder.build();
         okHttpClient.newCall(request)
@@ -53,7 +61,7 @@ public class OkHttpEngine implements IHttpEngine{
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, EngineCallback engineCallback) {
+    public void post(String url, boolean cache, Map<String, Object> params, EngineCallback engineCallback) {
         OkHttpClient okHttpClient=new OkHttpClient();
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         RequestBody body=RequestBody.create(mediaType,"");

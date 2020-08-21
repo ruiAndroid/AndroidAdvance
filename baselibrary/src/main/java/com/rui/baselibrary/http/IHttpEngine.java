@@ -9,8 +9,8 @@ import java.util.Map;
  */
 public interface IHttpEngine {
     //get请求
-    void get(String url, Map<String,Object> params,EngineCallback engineCallback);
+    void get(String url, boolean cache,Map<String,Object> params,EngineCallback engineCallback);
     //post 请求
-    void post(String url, Map<String,Object> params,EngineCallback engineCallback);
+    void post(String url, boolean cache,Map<String,Object> params,EngineCallback engineCallback);
 
 }
