@@ -1,5 +1,5 @@
 <resources>
-    <style name="dialog" parent="Theme.AppCompat.Dialog">
+    <style name="dialog" parent="android:Theme.Dialog">
         <!--边框-->
         <item name="android:windowFrame">@null</item>
         <!--是否浮现在activity之上-->
@@ -9,7 +9,7 @@
         <!--背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

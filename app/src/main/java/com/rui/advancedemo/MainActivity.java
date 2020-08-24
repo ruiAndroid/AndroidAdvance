@@ -58,15 +58,15 @@ public class MainActivity extends BaseSkinActivity {
 
         IDaoSupport<DBTestBean> daoSupport = DaoSupportFactory.getDaoFactoryInstance().getDaoSupport(DBTestBean.class);
 //        daoSupport.insert(new DBTestBean(1,"haha"));
-//        List<DBTestBean> dbTestBeans=new ArrayList<>();
-       /* for(int i=0;i<10;i++){
+        /*List<DBTestBean> dbTestBeans=new ArrayList<>();
+        for(int i=0;i<10;i++){
             DBTestBean dbTestBean=new DBTestBean();
             dbTestBean.setAge(i);
             dbTestBean.setName("a:"+i);
             dbTestBeans.add(dbTestBean);
         }
         daoSupport.insert(dbTestBeans);*/
-        List<DBTestBean> query = daoSupport.querySupport().selections("ages=?").selectionArgs("23").query();
+        List<DBTestBean> query = daoSupport.querySupport().selections("age=?").selectionArgs("2").query();
 
         Log.i("test","query result:"+query.toString());
     }
@@ -111,6 +111,7 @@ public class MainActivity extends BaseSkinActivity {
             Resources mySource=new Resources(assetManager,superRes.getDisplayMetrics(),superRes.getConfiguration());
             int identifier = mySource.getIdentifier("image_src", "drawable", "");
             Drawable newDrawable = mySource.getDrawable(identifier);
+
 
 
 

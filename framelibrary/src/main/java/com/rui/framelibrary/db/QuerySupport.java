@@ -84,7 +84,7 @@ public class QuerySupport<T> {
      */
     public List<T> queryAll(){
         Log.i("test","queryAll");
-        Cursor cursor = mSqlLiteDatabase.query(DaoUtils.getTableName(mClazz),
+        Cursor cursor = mSqlLiteDatabase.query(mClazz.getSimpleName(),
                 null, null, null,null, null, null);
         return cursorToList(cursor);
     }
@@ -95,7 +95,8 @@ public class QuerySupport<T> {
      */
     public List<T> query(){
         Log.i("test","query");
-        Cursor cursor = mSqlLiteDatabase.query(DaoUtils.getTableName(mClazz),
+
+        Cursor cursor = mSqlLiteDatabase.query(mClazz.getSimpleName(),
                 mQueryColumns, mQuerySelection, mQuerySelectionArgs, mQueryGroupBy, mQueryHaving, mQueryOrdering);
         clearQueryParams();
         return cursorToList(cursor);
