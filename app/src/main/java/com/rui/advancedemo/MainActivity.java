@@ -1,6 +1,5 @@
 package com.rui.advancedemo;
 
-import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -20,12 +19,10 @@ import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
-import com.rui.framelibrary.http.HttpCallback;
+import com.rui.baselibrary.http.HttpCallback;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
@@ -94,7 +91,7 @@ public class MainActivity extends BaseSkinActivity {
         //测试换肤
         Resources superRes = getResources();
 
-        //创建外部存储批复文件的文件夹
+        //创建外部存储皮肤文件的文件夹
         File skinFiles=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator +"rui"+File.separator+"skins");
         if(!skinFiles.exists()){
             skinFiles.mkdirs();

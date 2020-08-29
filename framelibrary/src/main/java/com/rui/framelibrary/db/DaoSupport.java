@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
 import android.util.Log;
 
-import com.rui.baselibrary.utils.DaoUtils;
+
+import com.rui.framelibrary.utils.DaoUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

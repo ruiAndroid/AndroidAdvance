@@ -3,6 +3,8 @@ package com.rui.baselibrary.http;
 
 import android.util.Log;
 
+import com.rui.framelibrary.http.EngineCallback;
+
 import java.io.IOException;
 import java.util.Map;
 

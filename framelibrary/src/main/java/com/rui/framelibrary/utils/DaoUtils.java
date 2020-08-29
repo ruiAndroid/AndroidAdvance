@@ -1,4 +1,4 @@
-package com.rui.baselibrary.utils;
+package com.rui.framelibrary.utils;
 
 /**
  * Time: 2020/6/4

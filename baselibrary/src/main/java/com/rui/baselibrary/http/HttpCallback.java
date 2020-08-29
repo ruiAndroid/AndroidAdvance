@@ -1,14 +1,10 @@
-package com.rui.framelibrary.http;
+package com.rui.baselibrary.http;
 
 import android.content.Context;
-import android.support.annotation.MainThread;
-import android.view.View;
 
 import com.google.gson.Gson;
-import com.rui.baselibrary.http.EngineCallback;
-import com.rui.baselibrary.http.HttpUtils;
+import com.rui.framelibrary.http.EngineCallback;
 
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.Map;
 
 /**

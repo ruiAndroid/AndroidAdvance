@@ -1,5 +1,7 @@
 package com.rui.baselibrary.http;
 
+import com.rui.framelibrary.http.EngineCallback;
+
 import java.util.Map;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Map;
  */
 public interface IHttpEngine {
     //get请求
-    void get(String url, boolean cache,Map<String,Object> params,EngineCallback engineCallback);
+    void get(String url, boolean cache, Map<String,Object> params, EngineCallback engineCallback);
     //post 请求
     void post(String url, boolean cache,Map<String,Object> params,EngineCallback engineCallback);
 
