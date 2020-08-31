@@ -20,6 +20,7 @@ import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.baselibrary.http.HttpCallback;
+import com.rui.framelibrary.skin.SkinManager;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -72,6 +73,27 @@ public class MainActivity extends BaseSkinActivity {
         Log.i("test","query result:"+query.toString());
     }
 
+    /**
+     * 加载皮肤
+     */
+    @CheckNet
+    @OnClick(values = R.id.skin_load)
+    public void skinLoad(){
+        String skinPath=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator +"rui"+File.separator+"skins";
+        boolean result=SkinManager.getInstance().loadSkin(skinPath);
+
+    }
+
+    /**
+     * 还原皮肤
+     */
+    @CheckNet
+    @OnClick(values = R.id.skinre_store)
+    public void skinRestore(){
+        SkinManager.getInstance().restoreSkin();
+
+    }
+
     @CheckNet
     @OnClick(values = R.id.dialog_test)
     public void test(){
@@ -88,59 +110,6 @@ public class MainActivity extends BaseSkinActivity {
                 .fullWidth()
                 .show();*/
 
-        //测试换肤
-        Resources superRes = getResources();
-
-        //创建外部存储皮肤文件的文件夹
-        File skinFiles=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator +"rui"+File.separator+"skins");
-        if(!skinFiles.exists()){
-            skinFiles.mkdirs();
-        }
-
-        File skinFile=new File(skinFiles,"rui.skin");
-
-        if(skinFile==null){
-            return;
-        }
-        //通过AssetManager加载自己的资源文件
-        try {
-
-
-
-            AssetManager assetManager = AssetManager.class.newInstance();
-
-            //低版本api
-            Method addAssetPath = assetManager.getClass().getDeclaredMethod("addAssetPath", String.class);
-            addAssetPath.invoke(assetManager,skinFile.getAbsolutePath());
-
-            //高版本API
-            /*
-            //通过反射拿到隐藏的AssetsApk类
-            @SuppressLint("PrivateApi") Class<?> apkAssetsClass = Class.forName("android.content.res.ApkAssets");
-            //调用AssetsApk类的loadFromPath方法加载本地资源
-            @SuppressLint("SoonBlockedPrivateApi") Method loadFromPathMethod = apkAssetsClass.getDeclaredMethod("loadFromPath",String.class);
-            Object apkAsset = loadFromPathMethod.invoke(apkAssetsClass,skinFile.getAbsolutePath());
-
-            ArrayList<Object> apkAssets = new ArrayList<>();
-            apkAssets.add(apkAsset);
-            Object[] apkAssetsArray = apkAssets.toArray();
-
-            //通过反射拿到AssetManager类的setApkAssets方法
-            Method declaredMethod = AssetManager.class.getDeclaredMethod("setApkAssets",Object[].class,Boolean.class);
-            //反射调用setApkAssets设置apkAssets
-            declaredMethod.invoke(assetManager, apkAssetsArray, false);*/
-
-            Resources mySource=new Resources(assetManager,superRes.getDisplayMetrics(),superRes.getConfiguration());
-            int identifier = mySource.getIdentifier("ad_test", "drawable", "tv.fun.orange");
-            Drawable newDrawable = mySource.getDrawable(identifier);
-
-            mButton.setBackground(newDrawable);
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
     }

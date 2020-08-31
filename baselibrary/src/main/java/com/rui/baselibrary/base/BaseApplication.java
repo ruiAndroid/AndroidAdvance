@@ -3,6 +3,7 @@ package com.rui.baselibrary.base;
 import android.app.Application;
 
 import com.rui.baselibrary.exception.ExceptionCrashHandler;
+import com.rui.framelibrary.skin.SkinManager;
 
 /**
  * Time: 2020/5/8
@@ -18,6 +19,6 @@ public class BaseApplication extends Application {
 
         //初始化全局异常
         ExceptionCrashHandler.getInstance().init(this);
-
+        SkinManager.getInstance().init(this);
     }
 }

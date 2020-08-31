@@ -1,6 +1,7 @@
 package com.rui.framelibrary.skin;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -28,10 +29,16 @@ public class SkinAttrSupport {
         for(int i=0;i<attributeCount;i++){
             String attrName=attrs.getAttributeName(i);
             String attrValue=attrs.getAttributeValue(i);
+            Log.i(TAG,"attrName:"+attrName);
+            Log.i(TAG,"attrValue:"+attrValue);
             //只过滤需要的attr
             SkinType skinType=getSkinType(attrName);
             if(skinType!=null){
+                //资源名称，目前只有attrVaule ,是一个@int类型
                 String resName=getResName(context,attrValue);
+                if(TextUtils.isEmpty(resName)){
+                    continue;
+                }
                 SkinAttr skinAttr=new SkinAttr(resName,skinType);
                 skinAttrs.add(skinAttr);
             }
@@ -46,8 +53,12 @@ public class SkinAttrSupport {
      * @return
      */
     private static String getResName(Context context, String attrValue) {
-
-
+        if(attrValue.startsWith("@")){
+            attrValue = attrValue.substring(1);
+            int attrInteger = Integer.parseInt(attrValue);
+            return context.getResources().getResourceEntryName(attrInteger);
+        }
+        return null;
     }
 
     /**

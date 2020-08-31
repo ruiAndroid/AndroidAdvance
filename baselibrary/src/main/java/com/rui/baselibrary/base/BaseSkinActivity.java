@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewParent;
 
 import com.rui.framelibrary.skin.SkinAttrSupport;
+import com.rui.framelibrary.skin.SkinManager;
 import com.rui.framelibrary.skin.attr.SkinAttr;
 import com.rui.framelibrary.skin.attr.SkinView;
 import com.rui.framelibrary.skin.support.SkinCompatViewInflater;
@@ -50,7 +51,6 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
             managerSkinView(skinView);
         }
 
-
         return view;
     }
 
@@ -59,7 +59,15 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
      * @param skinView
      */
     private void managerSkinView(SkinView skinView) {
-
+        List<SkinView> skinViews = SkinManager.getInstance().getSkinViews(this);
+        if(skinViews==null){
+            try {
+                SkinManager.getInstance().register(this,skinViews);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        skinViews.add(skinView);
 
     }
 
