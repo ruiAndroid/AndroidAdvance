@@ -43,16 +43,18 @@ public class ViewUtils {
         //2.获取viewById里面的view值
         for(Field field:fields){
             ViewById annotation = field.getAnnotation(ViewById.class);
-            field.setAccessible(true);
-            //获取注解里的id值
-            int viewId=annotation.value();
-            //3.findViewByid找到View
-            View view=viewFinder.findViewById(viewId);
-            if(view!=null){
-                try {
-                    field.set(object,view);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+            if(annotation!=null){
+                field.setAccessible(true);
+                //获取注解里的id值
+                int viewId=annotation.value();
+                //3.findViewByid找到View
+                View view=viewFinder.findViewById(viewId);
+                if(view!=null){
+                    try {
+                        field.set(object,view);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

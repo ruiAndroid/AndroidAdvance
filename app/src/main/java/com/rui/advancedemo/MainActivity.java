@@ -28,6 +28,7 @@ import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
 
+    private static final String TAG = "MainActivity";
     @ViewById(R.id.content)
     private RelativeLayout mContent;
 
@@ -80,7 +81,9 @@ public class MainActivity extends BaseSkinActivity {
     @OnClick(values = R.id.skin_load)
     public void skinLoad(){
         String skinPath=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator +"rui"+File.separator+"skins";
-        boolean result=SkinManager.getInstance().loadSkin(skinPath);
+        int result=SkinManager.getInstance().loadSkin(skinPath);
+        Log.i(TAG,"skinload result:"+result);
+
 
     }
 
@@ -88,7 +91,7 @@ public class MainActivity extends BaseSkinActivity {
      * 还原皮肤
      */
     @CheckNet
-    @OnClick(values = R.id.skinre_store)
+    @OnClick(values = R.id.skin_store)
     public void skinRestore(){
         SkinManager.getInstance().restoreSkin();
 

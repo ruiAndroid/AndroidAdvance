@@ -46,9 +46,11 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
         //一个Activity对应多个skinView
         if(view!=null){
             List<SkinAttr> skinAttrs=SkinAttrSupport.getSkinAttrs(context,attrs);
-            SkinView skinView=new SkinView(view,skinAttrs);
-            //统一交给skinManager管理
-            managerSkinView(skinView);
+            if(skinAttrs.size()>0){
+                SkinView skinView=new SkinView(view,skinAttrs);
+                //统一交给skinManager管理
+                managerSkinView(skinView);
+            }
         }
 
         return view;

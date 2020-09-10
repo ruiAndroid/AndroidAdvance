@@ -73,6 +73,7 @@ public class SkinResource {
             //获取到皮肤的包名
             mSkinPackageName = context.getPackageManager().getPackageArchiveInfo(skinPath, PackageManager.GET_ACTIVITIES).packageName;
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }

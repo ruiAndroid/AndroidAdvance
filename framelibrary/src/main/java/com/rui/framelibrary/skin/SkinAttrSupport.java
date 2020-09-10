@@ -55,8 +55,16 @@ public class SkinAttrSupport {
     private static String getResName(Context context, String attrValue) {
         if(attrValue.startsWith("@")){
             attrValue = attrValue.substring(1);
-            int attrInteger = Integer.parseInt(attrValue);
-            return context.getResources().getResourceEntryName(attrInteger);
+            int attrInteger = 0;
+            try {
+                attrInteger = Integer.parseInt(attrValue);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            if(attrInteger!=0){
+                return context.getResources().getResourceEntryName(attrInteger);
+            }
         }
         return null;
     }

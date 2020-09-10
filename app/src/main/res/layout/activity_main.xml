@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test"
-        android:layout_centerInParent="true"
+        android:focusable="true"
         />
     <Button
         android:id="@+id/skin_load"
@@ -19,12 +19,13 @@
         android:layout_height="wrap_content"
         android:text="skinLoad"
         android:layout_centerInParent="true"
+        android:focusable="true"
         />
     <Button
-        android:id="@+id/skinre_store"
+        android:id="@+id/skin_store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="skinRestore"
-        android:layout_centerInParent="true"
+        android:focusable="true"
         />
 </RelativeLayout>
