@@ -71,7 +71,7 @@ public class SkinResource {
             mSkinResorce=new Resources(assetManager,superRes.getDisplayMetrics(),superRes.getConfiguration());
 
             //获取到皮肤的包名
-            mSkinPackageName = context.getPackageManager().getPackageArchiveInfo(skinPath, PackageManager.GET_ACTIVITIES).packageName;
+            mSkinPackageName = context.getPackageManager().getPackageArchiveInfo(skinFile.getAbsolutePath(), PackageManager.GET_ACTIVITIES).packageName;
 
 
         } catch (Exception e) {

@@ -35,6 +35,9 @@ public class MainActivity extends BaseSkinActivity {
     @ViewById(R.id.dialog_test)
     private Button mButton;
 
+    @ViewById(R.id.skin_load)
+    private Button mSkinLoadButton;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_main);
@@ -72,6 +75,7 @@ public class MainActivity extends BaseSkinActivity {
         List<DBTestBean> query = daoSupport.querySupport().selections("age=?").selectionArgs("2").query();
 
         Log.i("test","query result:"+query.toString());
+        mSkinLoadButton.requestFocus();
     }
 
     /**

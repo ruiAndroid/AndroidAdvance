@@ -19,6 +19,7 @@ import com.rui.framelibrary.skin.attr.SkinAttr;
 import com.rui.framelibrary.skin.attr.SkinView;
 import com.rui.framelibrary.skin.support.SkinCompatViewInflater;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +65,7 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
         List<SkinView> skinViews = SkinManager.getInstance().getSkinViews(this);
         if(skinViews==null){
             try {
+                skinViews=new ArrayList<>();
                 SkinManager.getInstance().register(this,skinViews);
             } catch (Exception e) {
                 e.printStackTrace();
