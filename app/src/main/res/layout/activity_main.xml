@@ -23,6 +23,17 @@
         android:focusable="true"
         android:background="@drawable/app_tag_vip"
         />
+
+    <Button
+        android:id="@+id/skin_jump"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="jump"
+        android:focusable="true"
+        android:background="@drawable/app_tag_vip"
+        android:layout_below="@+id/skin_load"
+        android:layout_centerHorizontal="true"
+        />
     <Button
         android:id="@+id/skin_store"
         android:layout_width="wrap_content"

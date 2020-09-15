@@ -1,5 +1,6 @@
 package com.rui.advancedemo;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import com.rui.baselibrary.ioc.CheckNet;
 import com.rui.baselibrary.ioc.OnClick;
 import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
+import com.rui.baselibrary.navigationbar.INavigationBar;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.baselibrary.http.HttpCallback;
@@ -89,6 +91,14 @@ public class MainActivity extends BaseSkinActivity {
         Log.i(TAG,"skinload result:"+result);
 
 
+    }
+
+    @CheckNet
+    @OnClick(values = R.id.skin_jump)
+    public void jump(){
+        Intent intent=new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /**
