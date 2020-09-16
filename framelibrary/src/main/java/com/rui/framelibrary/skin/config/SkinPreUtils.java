@@ -1,6 +1,7 @@
 package com.rui.framelibrary.skin.config;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Time: 2020/9/11
@@ -54,10 +55,11 @@ public class SkinPreUtils {
     }
 
     /**
-     * 清空皮肤
+     * 清空皮肤信息
      */
     public void clearSkin() {
-
-
+        mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
+        .edit()
+        .clear();
     }
 }

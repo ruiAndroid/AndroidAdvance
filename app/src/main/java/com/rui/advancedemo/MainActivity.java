@@ -1,9 +1,6 @@
 package com.rui.advancedemo;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -13,19 +10,17 @@ import android.widget.RelativeLayout;
 import com.rui.advancedemo.model.DBTestBean;
 import com.rui.advancedemo.navigation.DefaultNavigationBar;
 import com.rui.baselibrary.base.BaseSkinActivity;
+import com.rui.baselibrary.http.HttpCallback;
 import com.rui.baselibrary.http.HttpUtils;
 import com.rui.baselibrary.ioc.CheckNet;
 import com.rui.baselibrary.ioc.OnClick;
 import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
-import com.rui.baselibrary.navigationbar.INavigationBar;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
-import com.rui.baselibrary.http.HttpCallback;
 import com.rui.framelibrary.skin.SkinManager;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
