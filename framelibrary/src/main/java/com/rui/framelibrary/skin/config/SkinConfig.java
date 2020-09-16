@@ -10,4 +10,8 @@ public class SkinConfig {
     public static String SKIN_INFO_NAME="skin_info";
     public static String SKIN_PATH_NAME="skin_path";
 
+    public static int SKIN_CHANGE_NOTHING=1;
+    public static int SKIN_CHANGE_SUCCESS=2;
+    public static int SKIN_CHANGE_FAILED=3;
+
 }

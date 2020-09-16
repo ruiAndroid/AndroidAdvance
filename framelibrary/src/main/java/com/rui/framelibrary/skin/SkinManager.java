@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.TextureView;
 
 import com.rui.framelibrary.skin.attr.SkinView;
+import com.rui.framelibrary.skin.config.SkinConfig;
 import com.rui.framelibrary.skin.config.SkinPreUtils;
 
 import java.io.File;
@@ -91,8 +92,26 @@ public class SkinManager {
     /**
      * 还原默认皮肤
      */
-    public void restoreSkin() {
+    public int restoreSkin() {
+        String currSkinPath = SkinPreUtils.getInstance(mContext).getSkinPath();
 
+        if(TextUtils.isEmpty(currSkinPath)){
+            return SkinConfig.SKIN_CHANGE_NOTHING;
+        }
+
+        //当前手机运行的apk路径
+        String skinPath=mContext.getPackageResourcePath();
+        mSkinResource=new SkinResource(mContext,skinPath);
+
+        //还原默认皮肤
+        Set<Activity> activities = skinViewsMap.keySet();
+        for (Activity activity : activities) {
+            List<SkinView> skinViews = skinViewsMap.get(activity);
+            for (SkinView skinView : skinViews) {
+                skinView.skin();
+            }
+        }
+        return SkinConfig.SKIN_CHANGE_SUCCESS;
 
     }
 

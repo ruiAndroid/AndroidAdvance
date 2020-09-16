@@ -58,8 +58,6 @@ public class SkinPreUtils {
      * 清空皮肤信息
      */
     public void clearSkin() {
-        mContext.getSharedPreferences(SkinConfig.SKIN_INFO_NAME, Context.MODE_PRIVATE)
-        .edit()
-        .clear();
+        saveSkinPath("");
     }
 }
