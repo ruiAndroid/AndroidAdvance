@@ -15,8 +15,10 @@ import android.view.ViewParent;
 
 import com.rui.framelibrary.skin.SkinAttrSupport;
 import com.rui.framelibrary.skin.SkinManager;
+import com.rui.framelibrary.skin.SkinResource;
 import com.rui.framelibrary.skin.attr.SkinAttr;
 import com.rui.framelibrary.skin.attr.SkinView;
+import com.rui.framelibrary.skin.callback.ISkinChangeListener;
 import com.rui.framelibrary.skin.support.SkinCompatViewInflater;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import java.util.List;
  * Author: jianrui
  * Description: base 支持换肤Activity
  */
-public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflaterFactory {
+public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflaterFactory, ISkinChangeListener {
 
     private static final String TAG = "BaseSkinActivity";
 
@@ -117,5 +119,11 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
             }
             parent = parent.getParent();
         }
+    }
+
+    @Override
+    public void changeSkin(SkinResource skinResource) {
+
+
     }
 }

@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.rui.framelibrary.skin.attr.SkinView;
+import com.rui.framelibrary.skin.callback.ISkinChangeListener;
 import com.rui.framelibrary.skin.config.SkinConfig;
 import com.rui.framelibrary.skin.config.SkinPreUtils;
 
@@ -27,7 +27,7 @@ public class SkinManager {
     private Context mContext;
 
     //存放 activity 对应的皮肤view集合
-    private HashMap<Activity, List<SkinView>> skinViewsMap=new HashMap<>();
+    private HashMap<ISkinChangeListener, List<SkinView>> skinViewsMap=new HashMap<>();
 
     private SkinResource mSkinResource;
 
@@ -96,13 +96,15 @@ public class SkinManager {
      */
     private int changeSkin() {
         int result =-1;
-        Set<Activity> activities = skinViewsMap.keySet();
-        for (Activity activity : activities) {
-            List<SkinView> skinViews = skinViewsMap.get(activity);
+        Set<ISkinChangeListener> skinChangeListeners = skinViewsMap.keySet();
+        for (ISkinChangeListener listener : skinChangeListeners) {
+            List<SkinView> skinViews = skinViewsMap.get(listener);
             for (SkinView skinView : skinViews) {
                 skinView.skin();
                 result= SkinConfig.SKIN_CHANGE_SUCCESS;
             }
+            //通知Activity做第三方自定义View的改变
+            listener.changeSkin(mSkinResource);
         }
         return result;
     }
@@ -152,9 +154,9 @@ public class SkinManager {
      * 注册一个skin
      * @param skinViews
      */
-    public void register(Activity activity,List<SkinView> skinViews) throws Exception {
-        if(!skinViewsMap.containsKey(activity)){
-            this.skinViewsMap.put(activity,skinViews);
+    public void register(ISkinChangeListener listener,List<SkinView> skinViews) throws Exception {
+        if(!skinViewsMap.containsKey(listener)){
+            this.skinViewsMap.put(listener,skinViews);
         }else{
             throw new Exception("this activity has registed already");
         }

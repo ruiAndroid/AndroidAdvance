@@ -19,6 +19,7 @@ import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.skin.SkinManager;
+import com.rui.framelibrary.skin.SkinResource;
 
 import java.io.File;
 import java.util.List;
@@ -157,5 +158,11 @@ public class MainActivity extends BaseSkinActivity {
         if(dexFile.exists()){
 
         }
+    }
+
+    @Override
+    public void changeSkin(SkinResource skinResource) {
+        //做一些第三方自定义View的改变
+
     }
 }
