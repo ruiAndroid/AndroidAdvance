@@ -65,19 +65,46 @@ public class SkinManager {
      * @param skinPath
      */
     public int loadSkin(String skinPath) {
+        File file=new File(skinPath);
+        //皮肤文件不存在,清空皮肤
+        if(!file.exists()){
+            return SkinConfig.SKIN_FILE_NOT_EXIST;
+        }
+
+        //如果当前皮肤已经替换过，则无需再次替换
+        String currSkinPath=SkinPreUtils.getInstance(mContext).getSkinPath();
+        if(skinPath.equals(currSkinPath)){
+            return SkinConfig.SKIN_CHANGE_NOTHING;
+        }
+
+        //看能否拿到包名
+        String skinPackageName = mContext.getPackageManager().getPackageArchiveInfo(skinPath, PackageManager.GET_ACTIVITIES).packageName;
+        if(TextUtils.isEmpty(skinPackageName)){
+            return SkinConfig.SKIN_FILE_NOT_EXIST;
+        }
+
+        int result = changeSkin();
+        //保存皮肤状态
+        saveSkinStatus(skinPath);
+        return result;
+
+    }
+
+    /**
+     * 改变皮肤
+     * @return
+     */
+    private int changeSkin() {
         int result =-1;
         Set<Activity> activities = skinViewsMap.keySet();
         for (Activity activity : activities) {
             List<SkinView> skinViews = skinViewsMap.get(activity);
             for (SkinView skinView : skinViews) {
                 skinView.skin();
-                result=1;
+                result= SkinConfig.SKIN_CHANGE_SUCCESS;
             }
         }
-        //保存皮肤状态
-        saveSkinStatus(skinPath);
         return result;
-
     }
 
     /**
@@ -103,14 +130,11 @@ public class SkinManager {
         String skinPath=mContext.getPackageResourcePath();
         mSkinResource=new SkinResource(mContext,skinPath);
 
-        //还原默认皮肤
-        Set<Activity> activities = skinViewsMap.keySet();
-        for (Activity activity : activities) {
-            List<SkinView> skinViews = skinViewsMap.get(activity);
-            for (SkinView skinView : skinViews) {
-                skinView.skin();
-            }
-        }
+        //改变皮肤
+        changeSkin();
+        //清空皮肤
+        SkinPreUtils.getInstance(mContext).clearSkin();
+
         return SkinConfig.SKIN_CHANGE_SUCCESS;
 
     }
