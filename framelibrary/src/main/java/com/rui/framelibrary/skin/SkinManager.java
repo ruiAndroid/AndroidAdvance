@@ -163,6 +163,14 @@ public class SkinManager {
     }
 
     /**
+     * 解除regist
+     */
+    public void unRegister(ISkinChangeListener listener){
+        this.skinViewsMap.remove(listener);
+
+    }
+
+    /**
      * 获取当前的SkinResource
      * @return
      */
