@@ -6,12 +6,20 @@
     android:id="@+id/content"
     tools:context=".MainActivity">
 
+    <com.rui.framelibrary.view.ChangeFontColorView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorAccent"
+        />
     <Button
         android:id="@+id/dialog_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test"
         android:focusable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:background="@drawable/app_tag_vip"
         />
     <Button
@@ -22,6 +30,8 @@
         android:layout_centerInParent="true"
         android:focusable="true"
         android:background="@drawable/app_tag_vip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="200px"
         />
 
     <Button
@@ -41,5 +51,6 @@
         android:text="skinRestore"
         android:focusable="true"
         android:background="@drawable/app_tag_vip"
+        android:layout_alignParentBottom="true"
         />
 </RelativeLayout>
