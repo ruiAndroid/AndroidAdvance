@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -32,7 +33,7 @@ public class ChangeFontColorView extends View {
     //绘制文本的基线坐标
     private int baseX,baseY;
 
-    private float rate= 0.6f;
+    private float rate= 0.1f;
 
     public ChangeFontColorView(Context context) {
         this(context,null);
@@ -68,17 +69,25 @@ public class ChangeFontColorView extends View {
         Log.i(TAG, "descent：" + mFontMetrics.descent);
         Log.i(TAG, "bottom：" + mFontMetrics.bottom);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rate+=0.01;
-                invalidate();
+        mHandler.sendEmptyMessageDelayed(1,50);
+    }
+
+
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==1){
                 if(rate>=1){
+                    mHandler.removeMessages(1);
                     return;
                 }
+                rate+=0.01;
+                invalidate();
+                mHandler.sendEmptyMessageDelayed(1,50);
             }
-        },100);
-    }
+        }
+
+    };
 
     @Override
     protected void onDraw(Canvas canvas) {
