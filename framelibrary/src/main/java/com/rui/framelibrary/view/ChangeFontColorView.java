@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Time: 2020/9/22
  * Author: jianrui
@@ -20,6 +22,8 @@ import android.view.View;
 public class ChangeFontColorView extends View {
     private static final String TEXT_TEST="测试test";
     private static final String TAG = "ChangeFontColorView";
+
+    private Context mContext;
 
     //原始画笔
     private Paint mOriginPaint;
@@ -35,6 +39,9 @@ public class ChangeFontColorView extends View {
 
     private float rate= 0.1f;
 
+    //handler
+    private AnimHandler mHandler=new AnimHandler(this);
+
     public ChangeFontColorView(Context context) {
         this(context,null);
     }
@@ -45,6 +52,7 @@ public class ChangeFontColorView extends View {
 
     public ChangeFontColorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext=context;
         init();
     }
 
@@ -72,23 +80,28 @@ public class ChangeFontColorView extends View {
         mHandler.sendEmptyMessageDelayed(1,50);
     }
 
+    public static  class AnimHandler extends Handler{
 
-    private Handler mHandler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if(msg.what==1){
-                if(rate>=1){
-                    mHandler.removeMessages(1);
-                    return;
-                }
-                rate+=0.01;
-                invalidate();
-                mHandler.sendEmptyMessageDelayed(1,50);
-            }
+        private WeakReference<ChangeFontColorView> mAnimRef;
+
+        public AnimHandler(ChangeFontColorView view) {
+            mAnimRef=new WeakReference<ChangeFontColorView>(view);
         }
 
-    };
-
+        @Override
+        public void handleMessage(Message msg) {
+            ChangeFontColorView view = mAnimRef.get();
+            if(msg.what==1){
+                if(view.rate>=1){
+                    this.removeMessages(1);
+                    return;
+                }
+                view.rate+=0.01;
+                view.invalidate();
+                this.sendEmptyMessageDelayed(1,50);
+            }
+        }
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         int middle=(int) (rate*getWidth());
