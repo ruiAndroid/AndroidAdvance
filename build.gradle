@@ -3,9 +3,9 @@
 buildscript {
     repositories {
         google()
-        jcenter()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+//        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven{ url 'https://maven.aliyun.com/repository/central'}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
@@ -14,17 +14,17 @@ buildscript {
         // in the individual module build.gradle files
 
         //发布项目到jcenter
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+//        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven{ url 'https://maven.aliyun.com/repository/central'}
     }
 }
 
@@ -40,7 +40,7 @@ ext {
     // 运行目标系统sdk版本
     targetSdkVersion = 28
     // 编译工具版本
-    buildToolsVersion = '28.0.3'
+    buildToolsVersion = '29.0.2'
     // android支持库统一版本
     androidSupportVersion = '25.2.0'
 
