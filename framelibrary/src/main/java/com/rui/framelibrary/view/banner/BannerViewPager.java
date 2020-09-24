@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rui.framelibrary.view.banner.adapter.BannerAdapter;
+
 /**
  * 自定义banner 轮播图
  *
@@ -17,7 +19,7 @@ public class BannerViewPager extends ViewPager {
 
     private Context mContext;
 
-//    private BannerAdapter mAdapter;
+    private BannerAdapter mAdapter;
 
     public BannerViewPager(@NonNull Context context) {
         this(context,null);
@@ -28,11 +30,16 @@ public class BannerViewPager extends ViewPager {
         this.mContext=context;
         init();
     }
-//
-//    public void setAdapter(BannerAdapter adapter) {
-//        this.mAdapter = adapter;
-//        setAdapter(new BannerPagerAdapter());
-//    }
+
+    /**
+     * 设置adapter
+     * @param adapter
+     */
+    public void setAdapter(BannerAdapter adapter) {
+        this.mAdapter = adapter;
+        //设置父类ViewPager的adapter
+        setAdapter(new BannerPagerAdapter());
+    }
 
     /**
      * 初始化
@@ -41,7 +48,9 @@ public class BannerViewPager extends ViewPager {
 
     }
 
-
+    /**
+     * viewPager 适配器
+     */
     private class BannerPagerAdapter extends PagerAdapter {
 
         @Override
@@ -58,17 +67,16 @@ public class BannerViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-
-//            View bannerView = mAdapter.getView(position);
-//            container.addView(bannerView );
-//            return bannerView;
-            return null;
+            View bannerView = mAdapter.getView(position);
+            container.addView(bannerView );
+            return bannerView;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             // 销毁回调的方法  移除页面即可
             container.removeView((View) object);
+            object=null;
         }
     }
 

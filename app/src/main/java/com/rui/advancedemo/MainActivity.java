@@ -20,6 +20,7 @@ import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.skin.SkinManager;
 import com.rui.framelibrary.skin.SkinResource;
+import com.rui.framelibrary.view.banner.BannerViewPager;
 
 import java.io.File;
 import java.util.List;
@@ -35,6 +36,9 @@ public class MainActivity extends BaseSkinActivity {
 
     @ViewById(R.id.skin_load)
     private Button mSkinLoadButton;
+
+    @ViewById(R.id.banner)
+    private BannerViewPager mBanner;
 
     @Override
     public void setLayout() {
@@ -74,6 +78,17 @@ public class MainActivity extends BaseSkinActivity {
 
         Log.i("test","query result:"+query.toString());
         mSkinLoadButton.requestFocus();
+
+        //初始化banner
+        initBanner();
+    }
+
+    /**
+     * 初始化banner
+     */
+    private void initBanner() {
+
+
     }
 
     /**

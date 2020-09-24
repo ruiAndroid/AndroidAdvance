@@ -13,9 +13,9 @@ import java.io.File;
  */
 public class ImageSelectActivity extends BaseSkinActivity {
     //选择图片的模式-多选
-    private static final int SELECT_PIC_MODE_MULTI=0x0011;
+    private static final int SELECT_PIC_MODE_MULTI=0x00000001;
     //选择图片的模式-单选
-    private static final int SELECT_PIC_MODE_SINGLE=0x0012;
+    private static final int SELECT_PIC_MODE_SINGLE=0x00000002;
     //是否显示相机icon
     private static final String EXTRA_SHOW_CAMERA="EXTRA_SHOW_CAMERA";
     //总共可以选择多少张图片得extra_key

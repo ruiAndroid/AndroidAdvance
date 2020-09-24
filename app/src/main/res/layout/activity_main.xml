@@ -53,4 +53,9 @@
         android:background="@drawable/app_tag_vip"
         android:layout_alignParentBottom="true"
         />
+
+    <com.rui.framelibrary.view.banner.BannerViewPager
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
 </RelativeLayout>
