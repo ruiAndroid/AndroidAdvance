@@ -14,5 +14,4 @@ public abstract class BannerAdapter {
     public abstract  View getView(int position);
 
 
-
 }

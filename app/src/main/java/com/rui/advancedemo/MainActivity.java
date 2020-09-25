@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.rui.advancedemo.model.DBTestBean;
@@ -21,6 +22,7 @@ import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.skin.SkinManager;
 import com.rui.framelibrary.skin.SkinResource;
 import com.rui.framelibrary.view.banner.BannerViewPager;
+import com.rui.framelibrary.view.banner.adapter.BannerAdapter;
 
 import java.io.File;
 import java.util.List;
@@ -87,8 +89,16 @@ public class MainActivity extends BaseSkinActivity {
      * 初始化banner
      */
     private void initBanner() {
-
-
+        mBanner.setAdapter(new BannerAdapter() {
+            @Override
+            public View getView(int position) {
+                ImageView iv=new ImageView(MainActivity.this);
+                iv.setImageDrawable(getResources().getDrawable(R.drawable.app_tag_vip));
+                return iv;
+            }
+        });
+        mBanner.startAutoBanner();
+        mBanner.setScrollDuration(2000);
     }
 
     /**
