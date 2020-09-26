@@ -45,6 +45,8 @@ public class DotIndicatorView extends View {
             Bitmap bitmap=drawableToBitmap(mDrawable);
             //将bitmap变为圆形
             Bitmap circleBitmap=getCircleBitmap(bitmap);
+            bitmap.recycle();
+            bitmap=null;
 
             canvas.drawBitmap(circleBitmap,0,0,null);
 

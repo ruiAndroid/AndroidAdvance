@@ -1,6 +1,9 @@
 package com.rui.framelibrary.view.banner;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -41,6 +44,9 @@ public class BannerViewPager extends ViewPager {
     //view的复用
     private List<View> mConvertViews;
 
+
+    //内存优化
+    private Activity mCurrActivity;
     //自动轮播的handler
     private Handler mAutoBannerHandler=new Handler(){
         @Override
@@ -81,6 +87,9 @@ public class BannerViewPager extends ViewPager {
         this.mAdapter = adapter;
         //设置父类ViewPager的adapter
         setAdapter(new BannerPagerAdapter());
+        //管理Activity生命周期
+        mCurrActivity = (Activity) getContext();
+        mCurrActivity.getApplication().registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
     /**
@@ -114,6 +123,7 @@ public class BannerViewPager extends ViewPager {
     @Override
     protected void onDetachedFromWindow() {
         Log.i(TAG,"onDetachedFromWindow");
+        mCurrActivity.getApplication().unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
         if(mAutoBannerHandler!=null){
             if(mAutoBannerHandler.hasMessages(MSG_AUTO_BANNER)){
                 mAutoBannerHandler.removeMessages(MSG_AUTO_BANNER);
@@ -169,4 +179,28 @@ public class BannerViewPager extends ViewPager {
         return null;
     }
 
+    //管理Activity的生命周期
+    Application.ActivityLifecycleCallbacks activityLifecycleCallbacks=new DefaultActivityLifecycleCallback(){
+        @Override
+        public void onActivityPaused(Activity activity) {
+            //判断是否监听的当前Activity
+            if(activity!=mCurrActivity){
+                return;
+            }
+            //停止轮播
+            if(mAutoBannerHandler!=null){
+                if(mAutoBannerHandler.hasMessages(MSG_AUTO_BANNER)){
+                    mAutoBannerHandler.removeMessages(MSG_AUTO_BANNER);
+                }
+            }
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+            //开启轮播
+            if(mAutoBannerHandler!=null){
+                startAutoBanner();
+            }
+        }
+    };
 }
