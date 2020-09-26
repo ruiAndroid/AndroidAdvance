@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -55,6 +56,10 @@ public class BannerView extends RelativeLayout {
     //点的位置 center:0 left:-1 right:1
     private int mDotLocation=1;
 
+    //宽高比
+    private float mWidthRate=8;
+    private float mHeightRate=3;
+
     public BannerView(Context context) {
         this(context,null);
     }
@@ -95,6 +100,8 @@ public class BannerView extends RelativeLayout {
             mDotSize= (int) typedArray.getDimension(R.styleable.BannerView_dotSize,DeviceUtils.dip2px(mContext,mDotSize));
             mDotDistance= (int) typedArray.getDimension(R.styleable.BannerView_dotDistance,DeviceUtils.dip2px(mContext,mDotDistance));
 
+            mWidthRate=typedArray.getFloat(R.styleable.BannerView_widthRate,mWidthRate);
+            mHeightRate=typedArray.getFloat(R.styleable.BannerView_heightRate,mHeightRate);
             typedArray.recycle();
         }
 
@@ -131,6 +138,20 @@ public class BannerView extends RelativeLayout {
             }
         });
         pageSelected(mCurrentPosition);
+
+        if(mWidthRate==0 || mHeightRate==0){
+            return;
+        }
+
+        //动态指定宽高
+        post(new Runnable() {
+            @Override
+            public void run() {
+                int width=getMeasuredWidth();
+                //指定宽高
+                getLayoutParams().height=(int) (width*mHeightRate/mWidthRate);
+            }
+        });
     }
 
     /**

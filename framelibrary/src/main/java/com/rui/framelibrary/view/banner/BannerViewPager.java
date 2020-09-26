@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,6 +23,7 @@ import java.lang.reflect.Field;
  */
 public class BannerViewPager extends ViewPager {
 
+    private static final String TAG = "BannerViewPager";
     private Context mContext;
 
     private BannerAdapter mAdapter;
@@ -59,6 +61,7 @@ public class BannerViewPager extends ViewPager {
      * 自动轮播功能
      */
     public void startAutoBanner(){
+        Log.i(TAG,"startAutoBanner");
         if(mAutoBannerHandler.hasMessages(MSG_AUTO_BANNER)){
             mAutoBannerHandler.removeMessages(MSG_AUTO_BANNER);
         }
@@ -104,13 +107,14 @@ public class BannerViewPager extends ViewPager {
 
     @Override
     protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+        Log.i(TAG,"onDetachedFromWindow");
         if(mAutoBannerHandler!=null){
             if(mAutoBannerHandler.hasMessages(MSG_AUTO_BANNER)){
                 mAutoBannerHandler.removeMessages(MSG_AUTO_BANNER);
             }
             mAutoBannerHandler=null;
         }
+        super.onDetachedFromWindow();
     }
 
     /**

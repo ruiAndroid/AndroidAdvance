@@ -93,6 +93,7 @@ public class MainActivity extends BaseSkinActivity {
             @Override
             public View getView(int position) {
                 ImageView iv=new ImageView(MainActivity.this);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
                 iv.setImageDrawable(getResources().getDrawable(R.drawable.app_tag_vip));
                 return iv;
             }

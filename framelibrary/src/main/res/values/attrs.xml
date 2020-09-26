@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--自定义轮播图-->
     <declare-styleable name="BannerView">
         <!--点的选中颜色值-->
         <attr name="dotFocusColor" format="color|reference"/>
@@ -17,7 +19,9 @@
         </attr>
         <!--底部颜色-->
         <attr name="bottomBgColor" format="color"/>
-
+        <!--宽高比-->
+        <attr name="widthRate" format="float"/>
+        <attr name="heightRate" format="float"/>
 
     </declare-styleable>
 </resources>

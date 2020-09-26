@@ -58,10 +58,12 @@
     <com.rui.framelibrary.view.banner.BannerView
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         app:dotSize="16dp"
         app:dotFocusColor="#0094ff"
         app:dotNormalColor="#000000"
+        app:widthRate="9"
+        app:heightRate="1"
 
         />
 </RelativeLayout>
