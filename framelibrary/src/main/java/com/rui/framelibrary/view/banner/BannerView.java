@@ -1,11 +1,13 @@
 package com.rui.framelibrary.view.banner;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,17 +29,31 @@ public class BannerView extends RelativeLayout {
     //点指示器layout
     private LinearLayout mDotContainer;
 
+    private RelativeLayout mDotBottom;
+
     //点指示器选中的drawable
     private Drawable mFocusDotIndicatorDrawable;
     //默认的点指示的drawable
     private Drawable mNormalDotIndicatorDrawable;
+    //底部指示器背景色
+    private Drawable mDotBgDrawable;
 
     private BannerAdapter mBannerAdapter;
 
     private Context mContext;
 
     //当前item的位置
-    private int mCurrentPosotion=0;
+    private int mCurrentPosition =0;
+
+
+    //各种自定义属性值
+    //点的大小 默认8dp
+    private int mDotSize=8;
+    //点之间的间距
+    private int mDotDistance=8;
+
+    //点的位置 center:0 left:-1 right:1
+    private int mDotLocation=1;
 
     public BannerView(Context context) {
         this(context,null);
@@ -51,7 +67,36 @@ public class BannerView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         this.mContext=context;
         inflate(context, R.layout.layout_banner,this);
+        initAttrs(attrs);
         initView();
+    }
+
+    /**
+     * 初始化自定义属性
+     */
+    private void initAttrs(AttributeSet attributeSet) {
+        TypedArray typedArray = mContext.obtainStyledAttributes(attributeSet, R.styleable.BannerView);
+        if(typedArray!=null){
+            mDotLocation=typedArray.getInt(R.styleable.BannerView_dotLocation,mDotLocation);
+
+            mDotBgDrawable=typedArray.getDrawable(R.styleable.BannerView_bottomBgColor);
+            if(mDotBgDrawable==null){
+                mDotBgDrawable=new ColorDrawable(Color.GRAY);
+            }
+            mFocusDotIndicatorDrawable=typedArray.getDrawable(R.styleable.BannerView_dotFocusColor);
+            if(mFocusDotIndicatorDrawable==null){
+                mFocusDotIndicatorDrawable=new ColorDrawable(Color.RED);
+            }
+
+            mNormalDotIndicatorDrawable=typedArray.getDrawable(R.styleable.BannerView_dotNormalColor);
+            if(mNormalDotIndicatorDrawable==null){
+                mNormalDotIndicatorDrawable=new ColorDrawable(Color.GRAY);
+            }
+            mDotSize= (int) typedArray.getDimension(R.styleable.BannerView_dotSize,DeviceUtils.dip2px(mContext,mDotSize));
+            mDotDistance= (int) typedArray.getDimension(R.styleable.BannerView_dotDistance,DeviceUtils.dip2px(mContext,mDotDistance));
+
+            typedArray.recycle();
+        }
 
     }
 
@@ -62,10 +107,9 @@ public class BannerView extends RelativeLayout {
         mBannerViewPager=findViewById(R.id.banner_viewpager);
         mTvDescription=findViewById(R.id.tv_description);
         mDotContainer=findViewById(R.id.ll_dot_container);
+        mDotBottom=findViewById(R.id.ll_dot_bottom);
 
-        mFocusDotIndicatorDrawable=new ColorDrawable(Color.RED);
-        mNormalDotIndicatorDrawable=new ColorDrawable(Color.WHITE);
-
+        mDotBottom.setBackgroundDrawable(mDotBgDrawable);
     }
 
     /**
@@ -86,7 +130,7 @@ public class BannerView extends RelativeLayout {
 
             }
         });
-        pageSelected(mCurrentPosotion);
+        pageSelected(mCurrentPosition);
     }
 
     /**
@@ -95,11 +139,11 @@ public class BannerView extends RelativeLayout {
      */
     private void pageSelected(int position) {
         //改变dot的状态以及文本状态
-        DotIndicatorView oldDotIndicatorView= (DotIndicatorView) mDotContainer.getChildAt(mCurrentPosotion);
+        DotIndicatorView oldDotIndicatorView= (DotIndicatorView) mDotContainer.getChildAt(mCurrentPosition);
         oldDotIndicatorView.setDrawable(mNormalDotIndicatorDrawable);
 
-        mCurrentPosotion=position%mBannerAdapter.getCount();
-        DotIndicatorView currentDotIndicatorView= (DotIndicatorView) mDotContainer.getChildAt(mCurrentPosotion);
+        mCurrentPosition =position%mBannerAdapter.getCount();
+        DotIndicatorView currentDotIndicatorView= (DotIndicatorView) mDotContainer.getChildAt(mCurrentPosition);
         currentDotIndicatorView.setDrawable(mFocusDotIndicatorDrawable);
 
 
@@ -111,13 +155,14 @@ public class BannerView extends RelativeLayout {
     private void initDot() {
         int dotCount=mBannerAdapter.getCount();
         mDotContainer.removeAllViews();
+        mDotContainer.setGravity(getDotLocation());
         for (int i=0;i<dotCount;i++){
             DotIndicatorView dotIndicatorView=new DotIndicatorView(this.mContext);
             //设置大小
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(DeviceUtils.dip2px(mContext,8),DeviceUtils.dip2px(mContext,8));
-            layoutParams.leftMargin=DeviceUtils.dip2px(mContext,2);
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(mDotSize,mDotSize);
+            //设置左右间距
+            layoutParams.leftMargin=mDotDistance;
             dotIndicatorView.setLayoutParams(layoutParams);
-            dotIndicatorView.setBackgroundColor(Color.RED);
             if(i==0){   //默认选中位置
                 dotIndicatorView.setDrawable(mFocusDotIndicatorDrawable);
             }else{
@@ -128,6 +173,22 @@ public class BannerView extends RelativeLayout {
 
     }
 
+    /**
+     * 获取点的位置
+     * @return
+     */
+    public int getDotLocation() {
+        switch (mDotLocation){
+            case -1:
+               return Gravity.LEFT;
+            case 0:
+                return Gravity.CENTER;
+            case 1:
+                return Gravity.RIGHT;
+            default:
+                return Gravity.RIGHT;
+        }
+    }
 
     /**
      * 开始轮播

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content"
     tools:context=".MainActivity">
 
@@ -57,5 +58,10 @@
     <com.rui.framelibrary.view.banner.BannerView
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
+        android:layout_height="150dp"
+        app:dotSize="16dp"
+        app:dotFocusColor="#0094ff"
+        app:dotNormalColor="#000000"
+
+        />
 </RelativeLayout>

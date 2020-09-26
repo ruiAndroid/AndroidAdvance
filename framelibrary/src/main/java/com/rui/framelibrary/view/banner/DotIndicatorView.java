@@ -2,8 +2,8 @@ package com.rui.framelibrary.view.banner;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -33,7 +33,6 @@ public class DotIndicatorView extends View {
 
     public DotIndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
     }
 
     @Override
@@ -64,14 +63,16 @@ public class DotIndicatorView extends View {
         Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setDither(true);
         paint.setFilterBitmap(true);
-
-        //在画布上画一个圆
+        //在画布上画一个圆  //DST
         canvas.drawCircle(getMeasuredWidth()/2,getMeasuredHeight()/2,getMeasuredWidth()/2,paint);
 
         //取圆和矩形bitmap的交集
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        //再把原来的bitmap绘制到新的圆上
+
+        //再把原来的bitmap绘制到新的圆上    //SRC
         canvas.drawBitmap(bitmap,0,0,paint);
+
+        paint.setXfermode(null);
 
         return circleBitmap;
     }
