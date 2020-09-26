@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.rui.framelibrary.view.banner.adapter.BannerAdapter;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -35,6 +37,9 @@ public class BannerViewPager extends ViewPager {
 
     //自定义的scroller
     private BannerScroller mBannerScroller;
+
+    //view的复用
+    private List<View> mConvertViews;
 
     //自动轮播的handler
     private Handler mAutoBannerHandler=new Handler(){
@@ -94,6 +99,7 @@ public class BannerViewPager extends ViewPager {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        mConvertViews=new ArrayList<>();
 
     }
 
@@ -136,7 +142,7 @@ public class BannerViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            View bannerView = mAdapter.getView(position%mAdapter.getCount());
+            View bannerView = mAdapter.getView(position%mAdapter.getCount(),getConvertView());
             container.addView(bannerView );
             return bannerView;
         }
@@ -145,8 +151,22 @@ public class BannerViewPager extends ViewPager {
         public void destroyItem(ViewGroup container, int position, Object object) {
             // 销毁回调的方法  移除页面即可
             container.removeView((View) object);
-            object=null;
+            mConvertViews.add((View) object);
         }
+    }
+
+    /**
+     * 获取到复用的view
+     * @return
+     */
+    private View getConvertView() {
+        for(int i=0;i<mConvertViews.size();i++){
+            //获取没有添加到viewpager里面
+            if(mConvertViews.get(i).getParent()==null){
+                return mConvertViews.get(i);
+            }
+        }
+        return null;
     }
 
 }

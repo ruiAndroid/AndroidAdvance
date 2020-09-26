@@ -90,12 +90,18 @@ public class MainActivity extends BaseSkinActivity {
      */
     private void initBanner() {
         mBanner.setAdapter(new BannerAdapter() {
+
             @Override
-            public View getView(int position) {
-                ImageView iv=new ImageView(MainActivity.this);
-                iv.setScaleType(ImageView.ScaleType.FIT_XY);
-                iv.setImageDrawable(getResources().getDrawable(R.drawable.app_tag_vip));
-                return iv;
+            public View getView(int position, View convertView) {
+                ImageView bannerIv;
+                if(convertView==null){
+                    bannerIv=new ImageView(MainActivity.this);
+                    bannerIv.setScaleType(ImageView.ScaleType.FIT_XY);
+                }else{
+                    bannerIv= (ImageView) convertView;
+                }
+                bannerIv.setImageDrawable(getResources().getDrawable(R.drawable.app_tag_vip));
+                return bannerIv;
             }
 
             @Override
