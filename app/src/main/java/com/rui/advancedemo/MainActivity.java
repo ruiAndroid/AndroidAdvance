@@ -21,7 +21,7 @@ import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
 import com.rui.framelibrary.skin.SkinManager;
 import com.rui.framelibrary.skin.SkinResource;
-import com.rui.framelibrary.view.banner.BannerViewPager;
+import com.rui.framelibrary.view.banner.BannerView;
 import com.rui.framelibrary.view.banner.adapter.BannerAdapter;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class MainActivity extends BaseSkinActivity {
     private Button mSkinLoadButton;
 
     @ViewById(R.id.banner)
-    private BannerViewPager mBanner;
+    private BannerView mBanner;
 
     @Override
     public void setLayout() {
@@ -96,9 +96,20 @@ public class MainActivity extends BaseSkinActivity {
                 iv.setImageDrawable(getResources().getDrawable(R.drawable.app_tag_vip));
                 return iv;
             }
+
+            @Override
+            public int getCount() {
+
+                return 5;
+            }
+
+            @Override
+            public String getBannerDesc() {
+                return null;
+            }
         });
         mBanner.startAutoBanner();
-        mBanner.setScrollDuration(2000);
+        mBanner.setScrollDuration(100);
     }
 
     /**

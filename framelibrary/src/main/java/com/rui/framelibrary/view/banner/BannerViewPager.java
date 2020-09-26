@@ -29,7 +29,7 @@ public class BannerViewPager extends ViewPager {
     //自动轮播的msg
     private static final int MSG_AUTO_BANNER=0x0001;
     //轮播间隔时间
-    private long DELAY_TIME_BANNER=3000;
+    private long DELAY_TIME_BANNER=1500;
 
     //自定义的scroller
     private BannerScroller mBannerScroller;
@@ -132,7 +132,7 @@ public class BannerViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            View bannerView = mAdapter.getView(position);
+            View bannerView = mAdapter.getView(position%mAdapter.getCount());
             container.addView(bannerView );
             return bannerView;
         }

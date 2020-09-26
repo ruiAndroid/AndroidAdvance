@@ -13,5 +13,9 @@ public abstract class BannerAdapter {
     //根据位置获取viewPager的子view
     public abstract  View getView(int position);
 
+    //获取轮播的数量
+    public abstract int getCount();
 
+    //获取广告位描述
+    public abstract String getBannerDesc();
 }
