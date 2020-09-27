@@ -146,7 +146,6 @@ public class BannerViewPager extends ViewPager {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            // 这么写就对了，看了源码应该就明白
             return view == object;
         }
 

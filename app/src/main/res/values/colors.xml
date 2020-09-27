@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+
+    <color name="comment_dialog_bg">#fff5f0ec</color>
+    <color name="comment_dialog_content_text">#ff5c6266</color>
+    <color name="list_item_divider">#ffe6e6e6</color>
+    <color name="comment_dialog_share_text">#ff333333</color>
+    <color name="comment_dialog_submit_text">#ffffffff</color>
+
+    <color name="main_bg_color">#2F2FFF</color>
+    <color name="main_text_color">#FFFFFF</color>
 </resources>
