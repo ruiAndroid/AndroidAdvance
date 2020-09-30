@@ -2,6 +2,7 @@ package com.rui.advancedemo;
 
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,12 +20,15 @@ import com.rui.baselibrary.ioc.ViewById;
 import com.rui.baselibrary.ioc.ViewUtils;
 import com.rui.framelibrary.db.DaoSupportFactory;
 import com.rui.framelibrary.db.IDaoSupport;
+import com.rui.framelibrary.recyclerview.MultiTypeSupport;
+import com.rui.framelibrary.recyclerview.adapter.CommonAdapter;
 import com.rui.framelibrary.skin.SkinManager;
 import com.rui.framelibrary.skin.SkinResource;
 import com.rui.framelibrary.view.banner.BannerView;
 import com.rui.framelibrary.view.banner.adapter.BannerAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
@@ -190,6 +194,23 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     public void initData() {
+        CommonAdapter commonAdapter=new CommonAdapter(this, new ArrayList(), new MultiTypeSupport() {
+            @Override
+            public int getLayoutId(Object item, int position) {
+                return 0;
+            }
+        }) {
+            @Override
+            public void convert(RecyclerView.ViewHolder holder, Object item) {
+
+            }
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+            }
+        };
+
 
     }
 
