@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.rui.advancedemo.R;
@@ -59,7 +60,8 @@ public class ImageSelectActivity extends BaseSkinActivity {
     //图片RecyclerView
     @ViewById(R.id.image_list_rv)
     private RecyclerView mImageListRv;
-
+    //图片列表adapter
+    private ImageSelectAdapter mImageSelectAdapter;
 
     @Override
     protected void setLayout() {
@@ -92,6 +94,7 @@ public class ImageSelectActivity extends BaseSkinActivity {
      * 初始化本地图片数据
      */
     private void initImageList() {
+        mImageListRv.setLayoutManager(new GridLayoutManager(this,4));
         //开启线程
         getLoaderManager().initLoader(LOAD_TYPE,null,loaderCallbacks);
 
@@ -102,7 +105,9 @@ public class ImageSelectActivity extends BaseSkinActivity {
      * @param images
      */
     private void showImageList(ArrayList<String> images) {
-
+        if(mImageSelectAdapter==null){
+            mImageSelectAdapter=new ImageSelectAdapter();
+        }
 
     }
 
