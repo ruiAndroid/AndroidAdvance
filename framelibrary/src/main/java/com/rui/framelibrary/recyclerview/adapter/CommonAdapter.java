@@ -78,7 +78,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
      * 利用抽象方法回传出去，每个不一样的Adapter去设置
      * @param item 当前的数据
      */
-    public abstract void convert(RecyclerView.ViewHolder holder, T item);
+    public abstract void convert(CommonViewHolder holder, T item);
 
     @Override
     public int getItemCount() {

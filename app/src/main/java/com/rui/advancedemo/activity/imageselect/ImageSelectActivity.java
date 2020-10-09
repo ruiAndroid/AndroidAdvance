@@ -106,7 +106,7 @@ public class ImageSelectActivity extends BaseSkinActivity {
      */
     private void showImageList(ArrayList<String> images) {
         if(mImageSelectAdapter==null){
-            mImageSelectAdapter=new ImageSelectAdapter();
+//            mImageSelectAdapter=new ImageSelectAdapter();
         }
 
     }

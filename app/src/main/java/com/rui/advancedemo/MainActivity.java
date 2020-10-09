@@ -194,22 +194,6 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     public void initData() {
-        CommonAdapter commonAdapter=new CommonAdapter(this, new ArrayList(), new MultiTypeSupport() {
-            @Override
-            public int getLayoutId(Object item, int position) {
-                return 0;
-            }
-        }) {
-            @Override
-            public void convert(RecyclerView.ViewHolder holder, Object item) {
-
-            }
-
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-            }
-        };
 
 
     }

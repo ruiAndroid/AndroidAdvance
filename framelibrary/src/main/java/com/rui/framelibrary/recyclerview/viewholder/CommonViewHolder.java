@@ -14,9 +14,11 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
 
     // 用来存放子View减少findViewById的次数
     private SparseArray<View> mViews;
+    private View mRootView;
 
     public CommonViewHolder(@NonNull View itemView) {
         super(itemView);
+        this.mRootView=itemView;
         mViews = new SparseArray<>();
     }
 
@@ -33,6 +35,15 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
             mViews.put(viewId, view);
         }
         return (T) view;
+    }
+
+    public void setVisibility(int visible, int... viewIds) {
+        for (int viewId : viewIds)
+            getView(viewId).setVisibility(visible);
+    }
+
+    public void setItemClick(View.OnClickListener listener) {
+        mRootView.setOnClickListener(listener);
     }
 
     /**
